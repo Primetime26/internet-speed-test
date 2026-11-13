@@ -25,29 +25,29 @@ try {
 let totalTime = 0;
 let totalBytes = 0;
 
-try
-{
-     for (let i = 1; i <= 10; i++) {
-    const start = performance.now();
 
-    const response = await fetch(url);
+try {
+    for (let i = 1; i <= 10; i++) {
+        const start = performance.now();
 
-    if (!response.ok) {
-        throw new Error(`HTTP ошибка: ${response.status}`);
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ошибка: ${response.status}`);
+        }
+
+        const data = await response.arrayBuffer();
+
+        const end = performance.now();
+        const duration = end - start;
+
+        totalTime += duration;
+        totalBytes += data.byteLength;
+
+        console.log(
+            `Запрос ${i}: ${duration.toFixed(2)} мс`
+        );
     }
-
-    const data = await response.arrayBuffer();
-
-    const end = performance.now();
-    const duration = end - start;
-
-    totalTime += duration;
-    totalBytes += data.byteLength;
-
-    console.log(
-        `Запрос ${i}: ${duration.toFixed(2)} мс`
-    );
-}
 } catch (error) {
     console.error("Ошибка при скачивании:", error.message);
     process.exit(1);
